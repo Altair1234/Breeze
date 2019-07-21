@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_activity_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/top_image"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="48dp"
+        android:background="@color/transparent"
+        tools:ignore="ContentDescription" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/set_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/capsule_button_shape"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:text="@string/alarm_time_popup_button"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="48dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/cross"
+            android:drawableTint="#454545"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/repeat_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Repeat Alarm?" />
+
+    <LinearLayout
+        android:id="@+id/repeat_days_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/sunday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="S"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/monday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="M"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/tuesday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="T"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/wednesday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="W"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/repeat_days_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/thursday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="T"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/friday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="F"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/saturday"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="4dp"
+            android:background="@drawable/round_button_unselected"
+            android:text="S"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tunes_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/downpour"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/icon_downpour" />
+
+        <ImageButton
+            android:id="@+id/knockerup"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/icon_knocker_up" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/tunes_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageButton
+            android:id="@+id/cock"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/icon_cock" />
+
+        <ImageButton
+            android:id="@+id/bonsho"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_margin="4dp"
+            android:src="@drawable/icon_singing_bowl" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tune_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="About the alarm tune"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="visible" />
+
+    <Switch
+        android:id="@+id/increasing_volume"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:showText="false"
+        android:switchPadding="16dp"
+        android:text="Increase Volume"
+        android:textColor="@color/white" />
+
+</LinearLayout>
