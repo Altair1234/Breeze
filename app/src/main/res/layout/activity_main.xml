@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Repeat Alarm?"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/repeat_days_1"
@@ -151,26 +151,26 @@
 
         <ImageButton
             android:id="@+id/downpour"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@drawable/icon_downpour" />
 
         <ImageButton
             android:id="@+id/knockerup"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@drawable/icon_knocker_up" />
 
         <ImageButton
             android:id="@+id/cock"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@drawable/icon_cock" />
 
         <ImageButton
             android:id="@+id/bonsho"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
             android:src="@drawable/icon_singing_bowl" />
 
     </LinearLayout>
@@ -183,7 +183,18 @@
         android:text="About the alarm tune"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:visibility="visible" />
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/set_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/capsule_button_shape"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:text="Set Alarm"
+        android:visibility="gone"
+        android:textColor="@color/white"/>
 
     <Switch
         android:id="@+id/increasing_volume"

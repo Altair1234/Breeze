@@ -21,8 +21,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import static android.view.Gravity.CENTER;
-
+//import static android.view.Gravity.CENTER;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,9 +35,10 @@ public class MainActivity extends AppCompatActivity {
     TextView mTuneDetail;
     static MediaPlayer mediaPlayer;
     int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
-    Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday;
-    LinearLayout mRepeatDays1, mRepeatDays2, mTunes;
-    ImageButton mThunder, mKnockerUp, mCock, mBonsho;
+    Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSetAlarm;
+    LinearLayout mRepeatDays1, mRepeatDays2;
+    static LinearLayout mTunes;
+    ImageButton mDownpour, mKnockerUp, mCock, mBonsho;
     static CheckBox repeatAlarmCheckBox;
     Long dateInMillis;
     static int userHour = 0, userMinute = 0;
@@ -66,11 +66,12 @@ public class MainActivity extends AppCompatActivity {
         mThursday = findViewById(R.id.thursday);
         mFriday = findViewById(R.id.friday);
         mSaturday = findViewById(R.id.saturday);
-        mThunder = findViewById(R.id.downpour);
+        mDownpour = findViewById(R.id.downpour);
         mKnockerUp = findViewById(R.id.knockerup);
         mCock = findViewById(R.id.cock);
         mBonsho = findViewById(R.id.bonsho);
         repeatAlarmCheckBox = findViewById(R.id.repeat_alarm);
+        mSetAlarm = findViewById(R.id.set_alarm);
 
         String sharedPrefFile = "com.deproc.breeze";
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
@@ -111,62 +112,6 @@ public class MainActivity extends AppCompatActivity {
                     mRepeatDays1.setVisibility(View.GONE);
                     mRepeatDays2.setVisibility(View.GONE);
                 }
-            }
-        });
-
-        mThunder.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.downpour_sound);
-                mediaPlayer.start();
-                flagOfTune = 0;
-                mTuneDetail.setText("Rain and thunderclaps as the alarm tune.");
-            }
-        });
-
-        mKnockerUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.knockerup_sound);
-                mediaPlayer.start();
-                flagOfTune = 1;
-                mTuneDetail.setText("During the 1920s, a knocker-up would knock on the client's door to wake him up.");
-            }
-        });
-
-        mCock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer != null) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.cock_sound);
-                mediaPlayer.start();
-                flagOfTune = 2;
-                mTuneDetail.setText("Cocks have been used since time unknown as (pretty unreliable) alarm clocks.");
-            }
-        });
-
-        mBonsho.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
-                    mediaPlayer.stop();
-                    mediaPlayer.release();
-                }
-                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.singing_bowl_sound);
-                mediaPlayer.start();
-                flagOfTune = 3;
-                mTuneDetail.setText("Singing bowls are used in some Buddhist religious practices as well as for meditation and relaxation.");
             }
         });
 
@@ -274,6 +219,71 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mDownpour.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.downpour_sound);
+                mediaPlayer.start();
+                flagOfTune = 0;
+                mTuneDetail.setText("Rain and thunderclaps as the alarm tune.");
+                mTuneDetail.setVisibility(View.VISIBLE);
+                mSetAlarm.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mKnockerUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.knockerup_sound);
+                mediaPlayer.start();
+                flagOfTune = 1;
+                mTuneDetail.setText("During the 1920s, a knocker-up would knock on the client's door to wake him up.");
+                mTuneDetail.setVisibility(View.VISIBLE);
+                mSetAlarm.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mCock.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer != null) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.cock_sound);
+                mediaPlayer.start();
+                flagOfTune = 2;
+                mTuneDetail.setText("Cocks have been used since time unknown as (pretty unreliable) alarm clocks.");
+                mTuneDetail.setVisibility(View.VISIBLE);
+                mSetAlarm.setVisibility(View.VISIBLE);
+            }
+        });
+
+        mBonsho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+                    mediaPlayer.stop();
+                    mediaPlayer.release();
+                }
+                mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.singing_bowl_sound);
+                mediaPlayer.start();
+                flagOfTune = 3;
+                mTuneDetail.setText("Singing bowls are used in some Buddhist religious practices as well as for meditation and relaxation.");
+                mTuneDetail.setVisibility(View.VISIBLE);
+                mSetAlarm.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     private void setDayNightTheme() {
@@ -284,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
         //change to dusk or dawn theme
         if ((hour >= 4 && hour < 6) || (hour >= 18 && hour < 20)) {
             sunOrMoon.setImageResource(R.drawable.fireflies);
-            sunOrMoon.setForegroundGravity(CENTER);
+            //          sunOrMoon.setForegroundGravity(CENTER);
             mainActivityLayout.setBackgroundResource(R.drawable.gradient_dawn_dusk);
         }
 

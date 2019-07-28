@@ -39,6 +39,7 @@ public class AlarmDialog extends DialogFragment {
                 MainActivity.userHour = mAlarmTimePicker.getHour();
                 MainActivity.userMinute = mAlarmTimePicker.getMinute();
                 MainActivity.repeatAlarmCheckBox.setVisibility(View.VISIBLE);
+                MainActivity.mTunes.setVisibility(View.VISIBLE);
                 getDialog().dismiss();
             }
         });
