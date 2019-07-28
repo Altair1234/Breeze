@@ -55,7 +55,8 @@
         android:id="@+id/repeat_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Repeat Alarm?" />
+        android:text="Repeat Alarm?"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:id="@+id/repeat_days_1"
