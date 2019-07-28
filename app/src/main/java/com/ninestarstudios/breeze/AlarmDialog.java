@@ -36,7 +36,9 @@ public class AlarmDialog extends DialogFragment {
         mConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    getDialog().dismiss();
+                MainActivity.userHour = mAlarmTimePicker.getHour();
+                MainActivity.userMinute = mAlarmTimePicker.getMinute();
+                getDialog().dismiss();
             }
         });
         return view;

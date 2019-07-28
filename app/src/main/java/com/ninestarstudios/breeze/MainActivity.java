@@ -2,7 +2,6 @@ package com.ninestarstudios.breeze;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
@@ -38,11 +37,11 @@ public class MainActivity extends AppCompatActivity {
     static MediaPlayer mediaPlayer;
     int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
     Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday;
-    LinearLayout mRepeatDays1, mRepeatDays2, mTunes1, mTunes2;
+    LinearLayout mRepeatDays1, mRepeatDays2, mTunes;
     ImageButton mThunder, mKnockerUp, mCock, mBonsho;
     static CheckBox repeatAlarmCheckBox;
     Long dateInMillis;
-    int userHour = 0, userMinute = 0;
+    static int userHour = 0, userMinute = 0;
     static boolean repeatAlarm = false;
     static int flagOfTune;
 
@@ -58,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mCancelButton = findViewById(R.id.cancel_button);
         mRepeatDays1 = findViewById(R.id.repeat_days_1);
         mRepeatDays2 = findViewById(R.id.repeat_days_2);
-        mTunes1 = findViewById(R.id.tunes_1);
-        mTunes2 = findViewById(R.id.tunes_2);
+        mTunes = findViewById(R.id.tunes);
         mTuneDetail = findViewById(R.id.tune_details);
         mSunday = findViewById(R.id.sunday);
         mMonday = findViewById(R.id.monday);
@@ -106,11 +104,10 @@ public class MainActivity extends AppCompatActivity {
         repeatAlarmCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     mRepeatDays1.setVisibility(View.VISIBLE);
                     mRepeatDays2.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     mRepeatDays1.setVisibility(View.GONE);
                     mRepeatDays2.setVisibility(View.GONE);
                 }
@@ -321,15 +318,8 @@ public class MainActivity extends AppCompatActivity {
         int day = calendar.get(Calendar.DATE);
 
         dateInMillis = cal.getTimeInMillis();
+        alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
 
-        if (repeat) {
-            if (cal.get(Calendar.DATE) < day)
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis() + 7 * 24 * 60 * 60 * 1000, 7 * 24 * 60 * 60 * 1000, pendingIntent);
-            else
-                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 7 * 24 * 60 * 60 * 1000, pendingIntent);
-        } else {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        }
     }
 
     public void cancelAlarm(int weekNumber) {
