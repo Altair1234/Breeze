@@ -96,9 +96,7 @@ public class MainActivity extends AppCompatActivity {
         setGreeting();
 
         alarmSet = mPreferences.getBoolean(ALARM_KEY, false);
-        if (alarmSet) {
-            mSetAlarm.setText(mPreferences.getString(ALARM_TIME, "Set Alarm"));
-        }
+        mSetAlarm.setText(mPreferences.getString(ALARM_TIME, "Set Alarm"));
 
         mSettings.setOnClickListener(new View.OnClickListener() {
             @Override
