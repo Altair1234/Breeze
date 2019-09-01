@@ -1,70 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
     android:focusable="true"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
     tools:context=".MainActivity">
-
-    <ImageView
-        android:id="@+id/top_image"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="48dp"
-        android:background="@color/transparent"
-        tools:ignore="ContentDescription" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/set_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/capsule_button_shape"
-            android:paddingLeft="24dp"
-            android:paddingRight="24dp"
-            android:text="@string/alarm_time_popup_button"
-            android:textColor="@color/white" />
-
-        <Button
-            android:id="@+id/cancel_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/cross"
-            android:drawableTint="#454545"
-            android:visibility="gone" />
-
-
-    </LinearLayout>
 
     <CheckBox
         android:id="@+id/repeat_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:text="Repeat Alarm?"
-        android:visibility="gone" />
+        android:textSize="16sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
+    <LinearLayout
+        android:id="@+id/next_and_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Cancel"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Next"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/repeat_days_1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/repeat_days_2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/sunday"
@@ -73,7 +73,8 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="S"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
             android:id="@+id/monday"
@@ -82,7 +83,8 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="M"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
             android:id="@+id/tuesday"
@@ -91,7 +93,8 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="T"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
             android:id="@+id/wednesday"
@@ -100,18 +103,23 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="W"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
 
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/repeat_days_2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/thursday"
@@ -120,7 +128,8 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="T"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
             android:id="@+id/friday"
@@ -129,7 +138,8 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="F"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
 
         <Button
             android:id="@+id/saturday"
@@ -138,72 +148,148 @@
             android:layout_margin="4dp"
             android:background="@drawable/round_button_unselected"
             android:text="S"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            tools:ignore="ButtonStyle,HardcodedText" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/tunes1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tunes2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/downpour"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tunes_border"
+            android:padding="8dp"
+            android:text="Downpour"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/knockerup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tunes_border"
+            android:padding="8dp"
+            android:text="Knocker-Up"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/tunes"
-        android:layout_width="wrap_content"
+        android:id="@+id/tunes2"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/tune_details"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-        <ImageButton
-            android:id="@+id/downpour"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/icon_downpour" />
-
-        <ImageButton
-            android:id="@+id/knockerup"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/icon_knocker_up" />
-
-        <ImageButton
+        <TextView
             android:id="@+id/cock"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/icon_cock" />
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tunes_border"
+            android:padding="8dp"
+            android:text="Cock"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/bonsho"
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/icon_singing_bowl" />
+        <TextView
+            android:id="@+id/singing_bowl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/tunes_border"
+            android:padding="8dp"
+            android:text="Singing bowl"
+            android:textColor="@color/white"
+            android:textSize="20sp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:gravity="center_horizontal"
+        android:text="Settings"
+        android:textColor="#cea192"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/greetings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Good morning!"
+        android:textColor="@color/white"
+        android:textSize="48sp"
+        android:gravity="center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/tune_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:padding="16dp"
         android:text="About the alarm tune"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:visibility="gone" />
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
-    <Button
+    <TextView
         android:id="@+id/set_alarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/capsule_button_shape"
-        android:paddingLeft="24dp"
-        android:paddingRight="24dp"
+        android:padding="24dp"
         android:text="Set Alarm"
-        android:visibility="gone"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
-    <Switch
-        android:id="@+id/increasing_volume"
+    <TimePicker
+        android:id="@+id/alarm_time_picker"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:showText="false"
-        android:switchPadding="16dp"
-        android:text="Increase Volume"
-        android:textColor="@color/white" />
+        android:layout_height="wrap_content"
+        android:headerBackground="@color/transparent"
+        android:padding="24dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

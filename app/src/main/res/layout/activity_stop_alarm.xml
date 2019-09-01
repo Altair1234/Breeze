@@ -4,15 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".StopAlarmActivity"
-    android:background="@drawable/gradient_dawn_dusk">
-
-    <ImageView
-        android:id="@+id/fireflies_iv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:src="@drawable/fireflies" />
+    android:background="@drawable/background_gradient">
 
     <Button
         android:textColor="@color/white"
@@ -20,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/stop_alarm"
-        android:layout_below="@+id/fireflies_iv"
+        android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/capsule_button_shape"/>
 

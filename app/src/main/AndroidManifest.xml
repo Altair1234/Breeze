@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.ninestarstudios.breeze">
 
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
 
     <application
         android:allowBackup="true"
@@ -15,12 +17,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity
-            android:name="com.ninestarstudios.breeze.StopAlarmActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name="com.ninestarstudios.breeze.MainActivity"
-            android:screenOrientation="portrait">
+        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".WelcomeActivity" />
+        <activity android:name=".StopAlarmActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +28,9 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.ninestarstudios.breeze.AlertReceiver" />
+        <receiver android:name=".AlertReceiver" />
     </application>
+
+
 
 </manifest>
