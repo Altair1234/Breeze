@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,11 +28,15 @@ public class WelcomeActivity extends AppCompatActivity {
         userName = findViewById(R.id.username_edittext);
         nameEnter = findViewById(R.id.name_enter);
 
+        nameEnter.requestFocus();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
         skip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent goToMainActivity = new Intent(WelcomeActivity.this, MainActivity.class);
                 startActivity(goToMainActivity);
+                getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
             }
         });
 
@@ -41,6 +46,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 if (userName.getText().length() != 0) {
                     preferencesEditor.putString("name", userName.getText().toString());
                     preferencesEditor.apply();
+                    getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
                     Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else

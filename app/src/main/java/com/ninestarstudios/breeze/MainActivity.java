@@ -296,9 +296,11 @@ public class MainActivity extends AppCompatActivity {
 
         int toastHour = userHour;
         String meridian = "am";
-        if (toastHour > 13 || (toastHour == 12 && userMinute > 0)) {
+        if (toastHour == 12 && userMinute > 0) {
+            meridian = " pm";
+        } else if (toastHour > 13) {
             toastHour -= 12;
-            meridian = "pm";
+            meridian = " pm";
         }
         String toastMinute = Integer.toString(userMinute);
         if (userMinute < 10)
