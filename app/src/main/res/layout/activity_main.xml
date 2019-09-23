@@ -153,79 +153,70 @@
 
     </LinearLayout>
 
-
-    <LinearLayout
-        android:id="@+id/tunes1"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/choose_tune"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
+        android:layout_marginBottom="32dp"
+        android:text="Choose a tune:"
+        android:textColor="@color/white"
+        android:textSize="28sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/tunes2"
+        app:layout_constraintBottom_toTopOf="@id/downpour"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/downpour"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/tunes_border"
-            android:padding="8dp"
-            android:text="Downpour"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/knockerup"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/tunes_border"
-            android:padding="8dp"
-            android:text="Knocker-Up"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/tunes2"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/downpour"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:orientation="horizontal"
+        android:text="Downpour"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/knockerup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/knockerup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Knocker-Up"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/cock"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/cock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Cock"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/singing_bowl"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/singing_bowl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Singing bowl"
+        android:textColor="@color/white"
+        android:textSize="20sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/tune_details"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <TextView
-            android:id="@+id/cock"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/tunes_border"
-            android:padding="8dp"
-            android:text="Cock"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/singing_bowl"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/tunes_border"
-            android:padding="8dp"
-            android:text="Singing bowl"
-            android:textColor="@color/white"
-            android:textSize="20sp" />
-
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/settings"
@@ -244,10 +235,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
         android:text="Good morning!"
         android:textColor="@color/white"
         android:textSize="48sp"
-        android:gravity="center_horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ public class StopAlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_alarm);
+        Log.d("Main", "working till receiver");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
@@ -46,12 +48,6 @@ public class StopAlarmActivity extends AppCompatActivity {
         final boolean vibrate = sharedPreferences.getBoolean("vibrating", false);
 
         siren = sharedPreferences.getBoolean("siren_confirm", false);
-
-        if(siren){
-            sirenPlayer = MediaPlayer.create(this, R.raw.siren_sound);
-            sirenPlayer.start();
-            sirenPlayer.setVolume(1.0f, 1.0f);
-        }
 
         if (flagOfTune == 0)
             mediaPlayer = MediaPlayer.create(this, R.raw.downpour_sound);
@@ -79,29 +75,45 @@ public class StopAlarmActivity extends AppCompatActivity {
             }.start();
         }
 
-        if(vibrate){
-            new CountDownTimer(54000, 500){
-                public void onTick(long millisUntilFinished){
-                    if(mediaPlayer != null)
+        if (vibrate) {
+            new CountDownTimer(54000, 500) {
+                public void onTick(long millisUntilFinished) {
+                    if (mediaPlayer != null)
                         vibrator.vibrate(500);
                 }
-                public void onFinish(){
+
+                public void onFinish() {
                     finish();
                 }
             }.start();
+        }
+
+        if (siren) {
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    sirenPlayer = MediaPlayer.create(StopAlarmActivity.this, R.raw.siren_sound);
+                    sirenPlayer.start();
+                    sirenPlayer.setVolume(1.0f, 1.0f);
+                }
+            };
+
+            Handler h = new Handler();
+            h.postDelayed(r, 120000);
         }
 
         Button mStopAlarm = findViewById(R.id.stop_alarm);
         mStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //obj.cancelAlarm();
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
-                sirenPlayer.stop();
-                sirenPlayer.release();
-                sirenPlayer = null;
+                if (sirenPlayer != null) {
+                    sirenPlayer.stop();
+                    sirenPlayer.release();
+                    sirenPlayer = null;
+                }
                 if (vibrate)
                     vibrator.cancel();
                 SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();

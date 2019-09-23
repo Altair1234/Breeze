@@ -1,49 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".WelcomeActivity">
 
-    <LinearLayout
+    <EditText
+        android:id="@+id/username_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical">
+        android:layout_marginTop="32dp"
+        android:hint="Please enter your first name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:src="@drawable/breeze_icon" />
+    <ImageView
+        android:id="@+id/welcome_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/breeze_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/username_edittext"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Please enter your first name" />
+    <TextView
+        android:id="@+id/welcome_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Breeze - The Morning Alarm App"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/welcome_image" />
 
-        <TextView
-            android:id="@+id/name_enter"
-            android:text="Enter"
-            android:textSize="20dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/white"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/name_enter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginEnd="32dp"
+        android:text="Enter"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_edittext" />
 
     <TextView
         android:id="@+id/skip_or_enter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="32dp"
         android:text="Skip"
         android:textColor="@color/white"
-        android:textSize="24dp" />
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/username_edittext" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

@@ -57,13 +57,13 @@
             android:textSize="16sp" />
 
         <TextView
+            android:id="@+id/confirm_snooze_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="#cea192"
             android:paddingStart="4dp"
             android:paddingEnd="4dp"
             android:text="Confirm"
-            android:id="@+id/confirm_snooze_tv"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -91,7 +91,6 @@
         android:switchPadding="16dp"
         android:text="Enable Snooze"
         android:textSize="20sp"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vibrating"

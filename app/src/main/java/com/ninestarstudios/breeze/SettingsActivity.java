@@ -38,7 +38,7 @@ public class SettingsActivity extends AppCompatActivity {
         mPreferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
         final SharedPreferences.Editor preferencesEditor = mPreferences.edit();
 
-        increasingVolume = mPreferences.getBoolean("increasing", true);
+        increasingVolume = mPreferences.getBoolean("increasing", false);
         mSetIncreasing.setChecked(increasingVolume);
 
         vibrate = mPreferences.getBoolean("vibrating", false);

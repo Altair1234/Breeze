@@ -24,20 +24,17 @@ public class MainActivity extends AppCompatActivity {
 
     String userName, alarmTime;
     String sharedPrefFile = "com.ninestarstudios.breeze";
-    LinearLayout mTunes1, mRepeatDays1, mRepeatDays2, mTunes2;
+    LinearLayout mRepeatDays1, mRepeatDays2;
     ConstraintLayout mainActivityLayout;
     private static final String TAG = "MainActivity";
-    boolean alarmSet, increasingVolume;
+    boolean alarmSet;
     private final String ALARM_KEY = "alarm";
     private final String WELCOME_SCREEN = "welcome";
     private final String USER_NAME = "name";
     private final String ALARM_TIME = "alarm_time";
-    private final String REPEATING = "repeating";
-    private final String VIBRATING = "vibrating";
-    boolean vibrate;
     final String FLAG_OF_TUNE = "flag";
     SharedPreferences mPreferences;
-    TextView mTuneDetail, greetings, mSetAlarm, mCancel, mNext, mDownpour, mKnockerUp, mCock, mBonsho, mSettings;
+    TextView mTuneDetail, greetings, mSetAlarm, mCancel, mNext, mDownpour, mKnockerUp, mCock, mSingingBowl, mSettings, mChooseTune;
     MediaPlayer mediaPlayer;
     int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
     Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday;
@@ -56,8 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mainActivityLayout = findViewById(R.id.main_activity_layout);
         mRepeatDays1 = findViewById(R.id.repeat_days_1);
         mRepeatDays2 = findViewById(R.id.repeat_days_2);
-        mTunes1 = findViewById(R.id.tunes1);
-        mTunes2 = findViewById(R.id.tunes2);
+        mChooseTune = findViewById(R.id.choose_tune);
         mTuneDetail = findViewById(R.id.tune_details);
         mSunday = findViewById(R.id.sunday);
         mMonday = findViewById(R.id.monday);
@@ -69,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         mDownpour = findViewById(R.id.downpour);
         mKnockerUp = findViewById(R.id.knockerup);
         mCock = findViewById(R.id.cock);
-        mBonsho = findViewById(R.id.singing_bowl);
+        mSingingBowl = findViewById(R.id.singing_bowl);
         repeatAlarmCheckBox = findViewById(R.id.repeat_alarm);
         mSetAlarm = findViewById(R.id.set_alarm);
         greetings = findViewById(R.id.greetings);
@@ -116,8 +112,11 @@ public class MainActivity extends AppCompatActivity {
                 repeatAlarmCheckBox.setVisibility(View.GONE);
                 mRepeatDays1.setVisibility(View.GONE);
                 mRepeatDays2.setVisibility(View.GONE);
-                mTunes1.setVisibility(View.GONE);
-                mTunes2.setVisibility(View.GONE);
+                mChooseTune.setVisibility(View.GONE);
+                mCock.setVisibility(View.GONE);
+                mDownpour.setVisibility(View.GONE);
+                mKnockerUp.setVisibility(View.GONE);
+                mSingingBowl.setVisibility(View.GONE);
                 mTuneDetail.setVisibility(View.GONE);
                 mCancel.setVisibility(View.GONE);
                 mNext.setVisibility(View.GONE);
@@ -155,19 +154,31 @@ public class MainActivity extends AppCompatActivity {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
                     mRepeatDays1.setVisibility(View.GONE);
                     mRepeatDays2.setVisibility(View.GONE);
-                    mTunes1.setAlpha(0.0f);
-                    mTunes1.setVisibility(View.VISIBLE);
-                    mTunes1.animate().alpha(1.0f).setDuration(500);
-                    mTunes2.setAlpha(0.0f);
-                    mTunes2.setVisibility(View.VISIBLE);
-                    mTunes2.animate().alpha(1.0f).setDuration(500);
+                    mChooseTune.setAlpha(0.0f);
+                    mChooseTune.setVisibility(View.VISIBLE);
+                    mChooseTune.animate().alpha(1.0f).setDuration(500);
+                    mDownpour.setAlpha(0.0f);
+                    mDownpour.setVisibility(View.VISIBLE);
+                    mDownpour.animate().alpha(1.0f).setDuration(500);
+                    mKnockerUp.setAlpha(0.0f);
+                    mKnockerUp.setVisibility(View.VISIBLE);
+                    mKnockerUp.animate().alpha(1.0f).setDuration(500);
+                    mCock.setAlpha(0.0f);
+                    mCock.setVisibility(View.VISIBLE);
+                    mCock.animate().alpha(1.0f).setDuration(500);
+                    mSingingBowl.setAlpha(0.0f);
+                    mSingingBowl.setVisibility(View.VISIBLE);
+                    mSingingBowl.animate().alpha(1.0f).setDuration(500);
                     i = 3;
                 } else {
                     if (mediaPlayer == null) {
                         Toast.makeText(MainActivity.this, "Please choose an alarm tune", Toast.LENGTH_LONG).show();
                     } else {
-                        mTunes1.setVisibility(View.GONE);
-                        mTunes2.setVisibility(View.GONE);
+                        mChooseTune.setVisibility(View.GONE);
+                        mCock.setVisibility(View.GONE);
+                        mDownpour.setVisibility(View.GONE);
+                        mKnockerUp.setVisibility(View.GONE);
+                        mSingingBowl.setVisibility(View.GONE);
                         mTuneDetail.setVisibility(View.GONE);
                         mCancel.setVisibility(View.GONE);
                         mNext.setVisibility(View.GONE);
@@ -177,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
                             mediaPlayer.release();
                             mediaPlayer = null;
                         }
-                        //TODO: Change setalarm textview to show alarm timing and repeat frequency
                     }
                 }
             }
@@ -196,8 +206,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (mSetAlarm.getText().toString().equalsIgnoreCase("Set Alarm")) {
                     Log.d(TAG, "Here's your name:" + userName);
-                    //AlarmDialog alarmDialog = new AlarmDialog();
-                    //alarmDialog.show(getSupportFragmentManager(), "AlarmDialog");
                     mSetAlarm.setVisibility(View.GONE);
                     alarmTimePicker.setAlpha(0.0f);
                     alarmTimePicker.setVisibility(View.VISIBLE);
@@ -259,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mBonsho.setOnClickListener(new View.OnClickListener() {
+        mSingingBowl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mediaPlayer != null && mediaPlayer.isPlaying()) {
@@ -367,14 +375,11 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         SharedPreferences.Editor preferencesEditor = mPreferences.edit();
         preferencesEditor.putBoolean(ALARM_KEY, alarmSet);
-        //String INCREASING_KEY = "increasing";
-        //preferencesEditor.putBoolean(INCREASING_KEY, increasingVolume);
         preferencesEditor.putInt(WELCOME_SCREEN, welcomeScreen);
         preferencesEditor.putString(USER_NAME, userName);
         preferencesEditor.putInt(FLAG_OF_TUNE, flagOfTune);
         preferencesEditor.putString(ALARM_TIME, alarmTime);
-        preferencesEditor.putBoolean(REPEATING, repeatAlarm);
-        //preferencesEditor.putBoolean(VIBRATING, vibrate);
+        preferencesEditor.putBoolean("repeating", repeatAlarm);
         preferencesEditor.apply();
     }
 }
