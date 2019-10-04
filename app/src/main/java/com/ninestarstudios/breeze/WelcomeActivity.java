@@ -10,6 +10,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
 public class WelcomeActivity extends AppCompatActivity {
 
     EditText userName;

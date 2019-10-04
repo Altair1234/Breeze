@@ -8,7 +8,6 @@ import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -135,7 +134,6 @@ public class MainActivity extends AppCompatActivity {
                 if (i == 0) {
                     userHour = alarmTimePicker.getHour();
                     userMinute = alarmTimePicker.getMinute();
-                    Log.d(TAG, Integer.toString(userHour));
                     alarmTimePicker.setVisibility(View.GONE);
                     repeatAlarmCheckBox.setAlpha(0.0f);
                     repeatAlarmCheckBox.setVisibility(View.VISIBLE);
@@ -205,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mSetAlarm.getText().toString().equalsIgnoreCase("Set Alarm")) {
-                    Log.d(TAG, "Here's your name:" + userName);
                     mSetAlarm.setVisibility(View.GONE);
                     alarmTimePicker.setAlpha(0.0f);
                     alarmTimePicker.setVisibility(View.VISIBLE);
@@ -287,7 +284,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void setAlarm(boolean repeatAlarm) {
 
-        Log.d(TAG, mPreferences.getString("name", ""));
         Calendar cal = Calendar.getInstance();
         long currentTime = System.currentTimeMillis();
 

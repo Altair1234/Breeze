@@ -3,6 +3,7 @@ package com.ninestarstudios.breeze;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -10,7 +11,6 @@ import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,7 +27,6 @@ public class StopAlarmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stop_alarm);
-        Log.d("Main", "working till receiver");
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
             setShowWhenLocked(true);
             setTurnScreenOn(true);
@@ -38,8 +37,6 @@ public class StopAlarmActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED +
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
-
-        Log.d(TAG, "Alarm working fine!");
 
         sharedPreferences = this.getSharedPreferences("com.ninestarstudios.breeze", Context.MODE_PRIVATE);
 
@@ -58,6 +55,7 @@ public class StopAlarmActivity extends AppCompatActivity {
         else if (flagOfTune == 3)
             mediaPlayer = MediaPlayer.create(this, R.raw.singing_bowl_sound);
 
+        mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
         mediaPlayer.start();
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
