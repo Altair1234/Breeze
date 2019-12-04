@@ -43,7 +43,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:background="#b5725c"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="8dp"
@@ -56,15 +55,16 @@
             android:text="The snooze function of Breeze works a little... differently. Instead of giving you an option to postpone your alarm by a few moments, if you don't shut the alarm, a loud siren shall wake you up in the next couple minutes :)\n"
             android:textSize="16sp" />
 
-        <TextView
+        <Button
             android:id="@+id/confirm_snooze_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="#cea192"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
+            android:background="@drawable/capsule_button_shape"
+            android:textColor="#cea192"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:text="Confirm"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 

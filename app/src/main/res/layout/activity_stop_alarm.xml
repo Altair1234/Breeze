@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/capsule_button_shape"
         android:text="Stop"
-        android:textColor="@color/white"
+        android:textColor="@color/gradientColor2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/wake_up" />

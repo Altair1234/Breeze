@@ -1,11 +1,16 @@
 package com.ninestarstudios.breeze;
 
 import android.app.AlarmManager;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -33,12 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private final String ALARM_TIME = "alarm_time";
     final String FLAG_OF_TUNE = "flag";
     SharedPreferences mPreferences;
-    TextView mTuneDetail, greetings, mSetAlarm, mCancel, mNext, mDownpour, mKnockerUp, mCock, mSingingBowl, mSettings, mChooseTune;
+    TextView mTuneDetail, greetings, mCancel, mNext, mDownpour, mKnockerUp, mCock, mSingingBowl, mChooseTune;
     MediaPlayer mediaPlayer;
     int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
-    Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday;
+    Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSetAlarm, mSettings;
     CheckBox repeatAlarmCheckBox;
     int userHour = 0, userMinute = 0;
+    final String CHANNEL_ID = "1";
     boolean repeatAlarm = false;
     int flagOfTune, welcomeScreen;
     TimePicker alarmTimePicker;
@@ -72,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
         mCancel = findViewById(R.id.cancel);
         mNext = findViewById(R.id.next);
         mSettings = findViewById(R.id.settings);
+
+        createNotificationChannel();
 
         mPreferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         final SharedPreferences.Editor preferencesEditor = mPreferences.edit();
@@ -296,11 +304,22 @@ public class MainActivity extends AppCompatActivity {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.breeze_icon)
+                .setContentTitle("My notification")
+                .setContentText("Hello World!")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setFullScreenIntent(pendingIntent, true);
+
+        //NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        //notificationManager.notify(1, builder.build());
+
+
         int toastHour = userHour;
         String meridian = "am";
         if (toastHour == 12 && userMinute > 0) {
             meridian = " pm";
-        } else if (toastHour > 13) {
+        } else if (toastHour >= 13) {
             toastHour -= 12;
             meridian = " pm";
         }
@@ -319,16 +338,19 @@ public class MainActivity extends AppCompatActivity {
             ringingFrequency = " everyday" + ringingFrequency;
 
         if (!repeatAlarm) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
+            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         } else {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
         }
         Toast.makeText(MainActivity.this, "Alarm set for " + toastHour + ":" + toastMinute + " " + meridian + ringingFrequency, Toast.LENGTH_LONG).show();
-        mSetAlarm.setVisibility(View.VISIBLE);
+        greetings.setVisibility(View.VISIBLE);
         alarmTime = toastHour + ":" + toastMinute + meridian + ringingFrequency;
         alarmSet = true;
         onPause();
-        mSetAlarm.setText(alarmTime);
+        greetings.setText(alarmTime);
+        greetings.setAlpha(1.0f);
+        mSetAlarm.setText("Cancel");
+        mSetAlarm.setVisibility(View.VISIBLE);
     }
 
     public void cancelAlarm() {
@@ -337,7 +359,8 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         mSetAlarm.setText("Set Alarm");
-
+        greetings.setText("");
+        greetings.setVisibility(View.GONE);
     }
 
     public void setGreeting() {
@@ -365,6 +388,19 @@ public class MainActivity extends AppCompatActivity {
         greetings.setVisibility(View.VISIBLE);
         greetings.animate().alpha(0.0f).setDuration(4000);
     }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "alarm";
+            String description = "rings alarm";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
 
     @Override
     protected void onPause() {

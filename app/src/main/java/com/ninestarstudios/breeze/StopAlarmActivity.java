@@ -3,7 +3,6 @@ package com.ninestarstudios.breeze;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -42,7 +41,7 @@ public class StopAlarmActivity extends AppCompatActivity {
 
         flagOfTune = sharedPreferences.getInt("flag", 0);
         boolean increasingVolume = sharedPreferences.getBoolean("increasing", false);
-        final boolean vibrate = sharedPreferences.getBoolean("vibrating", false);
+        final boolean vibrate = sharedPreferences.getBoolean("vibrating", true);
 
         siren = sharedPreferences.getBoolean("siren_confirm", false);
 
@@ -55,10 +54,8 @@ public class StopAlarmActivity extends AppCompatActivity {
         else if (flagOfTune == 3)
             mediaPlayer = MediaPlayer.create(this, R.raw.singing_bowl_sound);
 
-        mediaPlayer.setAudioStreamType(AudioManager.STREAM_ALARM);
         mediaPlayer.start();
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
         final float initialVolume = 0.2f;
         if (increasingVolume) {
             new CountDownTimer(54000, 6000) {
@@ -104,6 +101,12 @@ public class StopAlarmActivity extends AppCompatActivity {
         mStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+                if (!sharedPreferences.getBoolean("repeating", false)) {
+                    sharedPreferencesEditor.putBoolean("alarm", false);
+                    sharedPreferencesEditor.putString("alarm_time", "Set Alarm");
+                    sharedPreferencesEditor.apply();
+                }
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
@@ -111,15 +114,10 @@ public class StopAlarmActivity extends AppCompatActivity {
                     sirenPlayer.stop();
                     sirenPlayer.release();
                     sirenPlayer = null;
-                }
+                } else
+                    siren = false;
                 if (vibrate)
                     vibrator.cancel();
-                SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-                if (!sharedPreferences.getBoolean("repeating", false)) {
-                    sharedPreferencesEditor.putBoolean("alarm", false);
-                    sharedPreferencesEditor.putString("alarm_time", "Set Alarm");
-                    sharedPreferencesEditor.apply();
-                }
                 finish();
             }
         });
