@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Cancel"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:visibility="gone" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Next"
-            android:textSize="24sp"
+            android:textSize="18sp"
             android:visibility="gone" />
 
     </LinearLayout>

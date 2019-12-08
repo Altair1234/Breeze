@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
-import android.os.Handler;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,10 +15,9 @@ import android.widget.Button;
 
 public class StopAlarmActivity extends AppCompatActivity {
 
-    static MediaPlayer mediaPlayer, sirenPlayer;
-    int flagOfTune;
+    static MediaPlayer mediaPlayer;
+    int mFlagOfTune;
     private static final String TAG = "AlertReceiver";
-    boolean siren;
     SharedPreferences sharedPreferences;
 
     @Override
@@ -39,29 +37,27 @@ public class StopAlarmActivity extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences("com.ninestarstudios.breeze", Context.MODE_PRIVATE);
 
-        flagOfTune = sharedPreferences.getInt("flag", 0);
-        boolean increasingVolume = sharedPreferences.getBoolean("increasing", false);
-        final boolean vibrate = sharedPreferences.getBoolean("vibrating", true);
+        mFlagOfTune = sharedPreferences.getInt("flag", 0);
+        boolean mIncreasingVolume = sharedPreferences.getBoolean("increasing", false);
+        final boolean mVibrate = sharedPreferences.getBoolean("vibrating", true);
 
-        siren = sharedPreferences.getBoolean("siren_confirm", false);
-
-        if (flagOfTune == 0)
+        if (mFlagOfTune == 0)
             mediaPlayer = MediaPlayer.create(this, R.raw.downpour_sound);
-        else if (flagOfTune == 1)
+        else if (mFlagOfTune == 1)
             mediaPlayer = MediaPlayer.create(this, R.raw.knockerup_sound);
-        else if (flagOfTune == 2)
+        else if (mFlagOfTune == 2)
             mediaPlayer = MediaPlayer.create(this, R.raw.cock_sound);
-        else if (flagOfTune == 3)
+        else if (mFlagOfTune == 3)
             mediaPlayer = MediaPlayer.create(this, R.raw.singing_bowl_sound);
 
         mediaPlayer.start();
         final Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        final float initialVolume = 0.2f;
-        if (increasingVolume) {
+        final float INITIAL_VOLUME = 0.2f;
+        if (mIncreasingVolume) {
             new CountDownTimer(54000, 6000) {
                 public void onTick(long millisUntilFinished) {
                     if (mediaPlayer != null)
-                        mediaPlayer.setVolume(initialVolume + 0.1f, initialVolume + 0.1f);
+                        mediaPlayer.setVolume(INITIAL_VOLUME + 0.1f, INITIAL_VOLUME + 0.1f);
                 }
 
                 public void onFinish() {
@@ -70,7 +66,7 @@ public class StopAlarmActivity extends AppCompatActivity {
             }.start();
         }
 
-        if (vibrate) {
+        if (mVibrate) {
             new CountDownTimer(54000, 500) {
                 public void onTick(long millisUntilFinished) {
                     if (mediaPlayer != null)
@@ -81,20 +77,6 @@ public class StopAlarmActivity extends AppCompatActivity {
                     finish();
                 }
             }.start();
-        }
-
-        if (siren) {
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    sirenPlayer = MediaPlayer.create(StopAlarmActivity.this, R.raw.siren_sound);
-                    sirenPlayer.start();
-                    sirenPlayer.setVolume(1.0f, 1.0f);
-                }
-            };
-
-            Handler h = new Handler();
-            h.postDelayed(r, 120000);
         }
 
         Button mStopAlarm = findViewById(R.id.stop_alarm);
@@ -110,13 +92,7 @@ public class StopAlarmActivity extends AppCompatActivity {
                 mediaPlayer.stop();
                 mediaPlayer.release();
                 mediaPlayer = null;
-                if (sirenPlayer != null) {
-                    sirenPlayer.stop();
-                    sirenPlayer.release();
-                    sirenPlayer = null;
-                } else
-                    siren = false;
-                if (vibrate)
+                if (mVibrate)
                     vibrator.cancel();
                 finish();
             }

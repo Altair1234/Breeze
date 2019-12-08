@@ -4,7 +4,6 @@ import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,119 +13,85 @@ import android.widget.Toast;
 
 public class SettingsActivity extends AppCompatActivity {
 
-    Switch mSetIncreasing, mSetVibrating, mSiren;
-    TextView mChangeNameTV, mChangeNameDone;
-    Button mSnoozeConfirmTV;
-    LinearLayout mChangeNameLL, mSnoozeConfirmLL;
-    EditText mChangeNameET;
-    SharedPreferences mPreferences;
-    boolean vibrate, increasingVolume, siren;
+    Switch setIncreasing, setVibrating;
+    TextView changeNameTV, changeNameDone;
+    LinearLayout changeNameLL;
+    EditText changeNameET;
+    SharedPreferences preferences;
+    boolean mVibrate, mIncreasingVolume;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        mSetIncreasing = findViewById(R.id.increasing_volume);
-        mChangeNameDone = findViewById(R.id.change_name_done);
-        mChangeNameET = findViewById(R.id.change_name_et);
-        mChangeNameTV = findViewById(R.id.change_name_tv);
-        mChangeNameLL = findViewById(R.id.change_name_ll);
-        mSetVibrating = findViewById(R.id.vibrating);
-        mSiren = findViewById(R.id.siren);
-        mSnoozeConfirmLL = findViewById(R.id.confirm_snooze_ll);
-        mSnoozeConfirmTV = findViewById(R.id.confirm_snooze_tv);
+        setIncreasing = findViewById(R.id.increasing_volume);
+        changeNameDone = findViewById(R.id.change_name_done);
+        changeNameET = findViewById(R.id.change_name_et);
+        changeNameTV = findViewById(R.id.change_name_tv);
+        changeNameLL = findViewById(R.id.change_name_ll);
+        setVibrating = findViewById(R.id.vibrating);
 
-        mPreferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
-        final SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
+        final SharedPreferences.Editor preferencesEditor = preferences.edit();
 
-        increasingVolume = mPreferences.getBoolean("increasing", false);
-        mSetIncreasing.setChecked(increasingVolume);
+        mIncreasingVolume = preferences.getBoolean("increasing", false);
+        setIncreasing.setChecked(mIncreasingVolume);
 
-        vibrate = mPreferences.getBoolean("vibrating", false);
-        mSetVibrating.setChecked(vibrate);
+        mVibrate = preferences.getBoolean("vibrating", false);
+        setVibrating.setChecked(mVibrate);
 
-        siren = mPreferences.getBoolean("siren", false);
-        mSiren.setChecked(siren);
-
-        String name = mPreferences.getString("name", "");
+        String name = preferences.getString("name", "");
         if (name != null && !name.equals(""))
-            mChangeNameET.setText(name);
+            changeNameET.setText(name);
 
-        mChangeNameTV.setOnClickListener(new View.OnClickListener() {
+        changeNameTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mChangeNameLL.setAlpha(0.0f);
-                mChangeNameLL.setVisibility(View.VISIBLE);
-                mChangeNameLL.animate().alpha(1.0f).setDuration(500);
+                changeNameLL.setAlpha(0.0f);
+                changeNameLL.setVisibility(View.VISIBLE);
+                changeNameLL.animate().alpha(1.0f).setDuration(500);
             }
         });
 
-        mChangeNameDone.setOnClickListener(new View.OnClickListener() {
+        changeNameDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mChangeNameET.getText() == null || mChangeNameET.getText().toString().equals("")) {
+                if (changeNameET.getText() == null || changeNameET.getText().toString().equals("")) {
                     Toast.makeText(SettingsActivity.this, "No name entered", Toast.LENGTH_LONG).show();
-                    mChangeNameLL.setVisibility(View.GONE);
+                    changeNameLL.setVisibility(View.GONE);
                 } else {
-                    String newName = mChangeNameET.getText().toString();
+                    String newName = changeNameET.getText().toString();
                     Toast.makeText(SettingsActivity.this, "Welcome, " + newName + "!", Toast.LENGTH_LONG).show();
                     preferencesEditor.putString("name", newName);
                     preferencesEditor.apply();
-                    mChangeNameLL.setVisibility(View.GONE);
+                    changeNameLL.setVisibility(View.GONE);
                 }
             }
         });
 
-        mSiren.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mSnoozeConfirmLL.setAlpha(0.0f);
-                    mSnoozeConfirmLL.setVisibility(View.VISIBLE);
-                    mSnoozeConfirmLL.animate().alpha(1.0f).setDuration(500);
-                } else {
-                    mSnoozeConfirmLL.setVisibility(View.GONE);
-                    preferencesEditor.putBoolean("siren", false);
-                    preferencesEditor.putBoolean("siren_confirm", false);
-                    preferencesEditor.apply();
-                }
-            }
-        });
-
-        mSnoozeConfirmTV.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSnoozeConfirmLL.setVisibility(View.GONE);
-                preferencesEditor.putBoolean("siren", true);
-                preferencesEditor.putBoolean("siren_confirm", true);
-                preferencesEditor.apply();
-                Toast.makeText(SettingsActivity.this, "\"Snooze\" enabled", Toast.LENGTH_LONG).show();
-            }
-        });
-
-        mSetIncreasing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setIncreasing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     Toast.makeText(SettingsActivity.this, "Volume of alarm will increase until stopped", Toast.LENGTH_LONG).show();
-                    increasingVolume = true;
+                    mIncreasingVolume = true;
                 } else {
-                    increasingVolume = false;
+                    mIncreasingVolume = false;
                 }
-                preferencesEditor.putBoolean("increasing", increasingVolume);
+                preferencesEditor.putBoolean("increasing", mIncreasingVolume);
                 preferencesEditor.apply();
             }
         });
 
-        mSetVibrating.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        setVibrating.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     Toast.makeText(SettingsActivity.this, "Alarm vibration on", Toast.LENGTH_LONG).show();
-                    vibrate = true;
+                    mVibrate = true;
                 } else {
-                    vibrate = false;
+                    mVibrate = false;
                 }
-                preferencesEditor.putBoolean("vibrating", vibrate);
+                preferencesEditor.putBoolean("vibrating", mVibrate);
                 preferencesEditor.apply();
             }
         });

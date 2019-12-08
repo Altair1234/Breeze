@@ -15,15 +15,15 @@ public class WelcomeActivity extends AppCompatActivity {
 
     EditText userName;
     TextView skip, nameEnter;
-    SharedPreferences mPreferences;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        mPreferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
-        final SharedPreferences.Editor preferencesEditor = mPreferences.edit();
+        preferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
+        final SharedPreferences.Editor preferencesEditor = preferences.edit();
 
         skip = findViewById(R.id.skip_or_enter);
         userName = findViewById(R.id.username_edittext);
