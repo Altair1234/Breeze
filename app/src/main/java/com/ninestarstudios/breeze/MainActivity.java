@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences mPreferences;
     TextView mTuneDetail, greetings, mCancel, mNext, mDownpour, mKnockerUp, mCock, mSingingBowl, mChooseTune;
     MediaPlayer mediaPlayer;
-    int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
     Button mSunday, mMonday, mTuesday, mWednesday, mThursday, mFriday, mSaturday, mSetAlarm, mSettings;
     CheckBox repeatAlarmCheckBox;
     int userHour = 0, userMinute = 0;
@@ -149,12 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     i = 2;
                 } else if (i == 1) {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
-                    /*mRepeatDays1.setAlpha(0.0f);
-                    mRepeatDays2.setAlpha(0.0f);
-                    mRepeatDays1.setVisibility(View.VISIBLE);
-                    mRepeatDays2.setVisibility(View.VISIBLE);
-                    mRepeatDays2.animate().alpha(1.0f).setDuration(500);
-                    mRepeatDays1.animate().alpha(1.0f).setDuration(500);*/
+
                     i = 2;
                 } else if (i == 2) {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
@@ -311,8 +305,8 @@ public class MainActivity extends AppCompatActivity {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .setFullScreenIntent(pendingIntent, true);
 
-        //NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        //notificationManager.notify(1, builder.build());
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(1, builder.build());
 
 
         int toastHour = userHour;
@@ -415,6 +409,15 @@ public class MainActivity extends AppCompatActivity {
         preferencesEditor.apply();
     }
 }
+
+//int[] isCheckedDay = {0, 0, 0, 0, 0, 0, 0};
+
+/*mRepeatDays1.setAlpha(0.0f);
+                    mRepeatDays2.setAlpha(0.0f);
+                    mRepeatDays1.setVisibility(View.VISIBLE);
+                    mRepeatDays2.setVisibility(View.VISIBLE);
+                    mRepeatDays2.animate().alpha(1.0f).setDuration(500);
+                    mRepeatDays1.animate().alpha(1.0f).setDuration(500);*/
 
  /* repeatAlarmCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
