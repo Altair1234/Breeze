@@ -12,11 +12,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 
 public class StopAlarmActivity extends AppCompatActivity {
 
     static MediaPlayer mediaPlayer;
-    int mFlagOfTune;
+    static ImageView stopBackground;
+    int mFlagOfTune, mBackground;
     private static final String TAG = "AlertReceiver";
     SharedPreferences sharedPreferences;
 
@@ -35,11 +37,18 @@ public class StopAlarmActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
 
+        Button mStopAlarm = findViewById(R.id.stop_alarm);
+        stopBackground = findViewById(R.id.stop_background);
+
         sharedPreferences = this.getSharedPreferences("com.ninestarstudios.breeze", Context.MODE_PRIVATE);
 
         mFlagOfTune = sharedPreferences.getInt("flag", 0);
+        mBackground = sharedPreferences.getInt("background", R.drawable.background_1);
         boolean mIncreasingVolume = sharedPreferences.getBoolean("increasing", false);
         final boolean mVibrate = sharedPreferences.getBoolean("vibrating", true);
+
+        if (mBackground != R.drawable.background_1)
+            stopBackground.setImageResource(mBackground);
 
         if (mFlagOfTune == 0)
             mediaPlayer = MediaPlayer.create(this, R.raw.downpour_sound);
@@ -79,7 +88,6 @@ public class StopAlarmActivity extends AppCompatActivity {
             }.start();
         }
 
-        Button mStopAlarm = findViewById(R.id.stop_alarm);
         mStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

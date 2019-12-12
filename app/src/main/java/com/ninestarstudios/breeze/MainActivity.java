@@ -1,22 +1,18 @@
 package com.ninestarstudios.breeze;
 
 import android.app.AlarmManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,24 +24,23 @@ public class MainActivity extends AppCompatActivity {
     String mUserName, mAlarmTime;
     String sharedPrefFile = "com.ninestarstudios.breeze";
     ConstraintLayout mainActivityLayout;
-    private static final String TAG = "MainActivity";
+    static ImageView mainBackground;
     boolean mAlarmSet;
     private final String ALARM_KEY = "alarm";
     private final String WELCOME_SCREEN = "welcome";
     private final String USER_NAME = "name";
     private final String ALARM_TIME = "alarm_time";
+    private final String REPEATING = "repeating";
+    final String BACKGROUND = "background";
     final String FLAG_OF_TUNE = "flag";
     SharedPreferences preferences;
     TextView tuneDetail, greetings, cancel, next, downpour, knockerUp, cock, singingBowl, chooseTune;
     MediaPlayer mediaPlayer;
     Button setAlarm, settings;
     CheckBox repeatAlarmCheckBox;
-    int mUserHour = 0, mUserMinute = 0;
-    final String CHANNEL_ID = "1";
+    int mUserHour = 0, mUserMinute = 0, mScreenCounter, mFlagOfTune, mWelcomeScreen, mBackground;
     boolean mRepeatAlarm = false;
-    int mFlagOfTune, mWelcomeScreen;
     TimePicker alarmTimePicker;
-    int screenCounter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +61,7 @@ public class MainActivity extends AppCompatActivity {
         cancel = findViewById(R.id.cancel);
         next = findViewById(R.id.next);
         settings = findViewById(R.id.settings);
-
-        createNotificationChannel();
+        mainBackground = findViewById(R.id.main_background);
 
         preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
         final SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -80,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
             Intent welcomeActivityIntent = new Intent(this, WelcomeActivity.class);
             startActivity(welcomeActivityIntent);
         }
+
+        mBackground = preferences.getInt(BACKGROUND, R.drawable.background_1);
+        if (mBackground != R.drawable.background_1)
+            mainBackground.setImageResource(mBackground);
 
         mUserName = preferences.getString(USER_NAME, "");
         preferencesEditor.putString(USER_NAME, mUserName);
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        screenCounter = 0;
+        mScreenCounter = 0;
 
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                 tuneDetail.setVisibility(View.GONE);
                 cancel.setVisibility(View.GONE);
                 next.setVisibility(View.GONE);
-                screenCounter = 0;
+                mScreenCounter = 0;
                 if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                     mediaPlayer.stop();
                     mediaPlayer.release();
@@ -125,19 +123,19 @@ public class MainActivity extends AppCompatActivity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (screenCounter == 0) {
+                if (mScreenCounter == 0) {
                     mUserHour = alarmTimePicker.getHour();
                     mUserMinute = alarmTimePicker.getMinute();
                     alarmTimePicker.setVisibility(View.GONE);
                     repeatAlarmCheckBox.setAlpha(0.0f);
                     repeatAlarmCheckBox.setVisibility(View.VISIBLE);
                     repeatAlarmCheckBox.animate().alpha(1.0f).setDuration(500);
-                    screenCounter = 2;
-                } else if (screenCounter == 1) {
+                    mScreenCounter = 2;
+                } else if (mScreenCounter == 1) {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
 
-                    screenCounter = 2;
-                } else if (screenCounter == 2) {
+                    mScreenCounter = 2;
+                } else if (mScreenCounter == 2) {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
                     chooseTune.setAlpha(0.0f);
                     chooseTune.setVisibility(View.VISIBLE);
@@ -154,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     singingBowl.setAlpha(0.0f);
                     singingBowl.setVisibility(View.VISIBLE);
                     singingBowl.animate().alpha(1.0f).setDuration(500);
-                    screenCounter = 3;
+                    mScreenCounter = 3;
                 } else {
                     if (mediaPlayer == null) {
                         Toast.makeText(MainActivity.this, "Please choose an alarm tune", Toast.LENGTH_LONG).show();
@@ -167,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                         tuneDetail.setVisibility(View.GONE);
                         cancel.setVisibility(View.GONE);
                         next.setVisibility(View.GONE);
-                        setAlarm(mRepeatAlarm);
+                        scheduleAlarm(mRepeatAlarm);
                         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
                             mediaPlayer.stop();
                             mediaPlayer.release();
@@ -269,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void setAlarm(boolean repeatAlarm) {
+    public void scheduleAlarm(boolean repeatAlarm) {
 
         Calendar cal = Calendar.getInstance();
         long currentTime = System.currentTimeMillis();
@@ -282,17 +280,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AlertReceiver.class);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
-                .setSmallIcon(R.drawable.breeze_icon)
-                .setContentTitle("My notification")
-                .setContentText("Hello World!")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setFullScreenIntent(pendingIntent, true);
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(1, builder.build());
-
 
         int toastHour = mUserHour;
         String meridian = "am";
@@ -368,19 +355,6 @@ public class MainActivity extends AppCompatActivity {
         greetings.animate().alpha(0.0f).setDuration(4000);
     }
 
-    private void createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = "alarm";
-            String description = "rings alarm";
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-    }
-
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -390,7 +364,8 @@ public class MainActivity extends AppCompatActivity {
         preferencesEditor.putString(USER_NAME, mUserName);
         preferencesEditor.putInt(FLAG_OF_TUNE, mFlagOfTune);
         preferencesEditor.putString(ALARM_TIME, mAlarmTime);
-        preferencesEditor.putBoolean("repeating", mRepeatAlarm);
+        preferencesEditor.putBoolean(REPEATING, mRepeatAlarm);
+        preferencesEditor.putInt(BACKGROUND, mBackground);
         preferencesEditor.apply();
     }
 }

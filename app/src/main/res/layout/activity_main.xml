@@ -5,10 +5,40 @@
     android:id="@+id/main_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
     android:focusable="true"
     android:gravity="center_horizontal"
     tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:background="@drawable/capsule_button_shape"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Settings"
+        android:textColor="@color/gradientColor2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/set_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/capsule_button_shape"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="Set Alarm"
+        android:textColor="@color/gradientColor2"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@id/settings"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 
     <CheckBox
         android:id="@+id/repeat_alarm"
@@ -22,6 +52,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
+
+    <ImageView
+        android:id="@+id/main_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/next_and_cancel"
@@ -218,21 +259,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:text="Settings"
-        android:textColor="@color/gradientColor2"
-        android:background="@drawable/capsule_button_shape"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
     <TextView
         android:id="@+id/greetings"
         android:layout_width="wrap_content"
@@ -258,22 +284,6 @@
         android:textSize="16sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
-
-    <Button
-        android:id="@+id/set_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:text="Set Alarm"
-        android:textColor="@color/gradientColor2"
-        android:background="@drawable/capsule_button_shape"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@id/settings"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />

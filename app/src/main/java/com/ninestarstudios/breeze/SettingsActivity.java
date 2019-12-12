@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -14,10 +15,12 @@ import android.widget.Toast;
 public class SettingsActivity extends AppCompatActivity {
 
     Switch setIncreasing, setVibrating;
-    TextView changeNameTV, changeNameDone;
+    TextView changeNameTV, changeNameDone, changeBackground;
     LinearLayout changeNameLL;
     EditText changeNameET;
     SharedPreferences preferences;
+    ImageView option1, option2, option3, option4, settingsBackground;
+    int mBackground;
     boolean mVibrate, mIncreasingVolume;
 
     @Override
@@ -31,6 +34,12 @@ public class SettingsActivity extends AppCompatActivity {
         changeNameTV = findViewById(R.id.change_name_tv);
         changeNameLL = findViewById(R.id.change_name_ll);
         setVibrating = findViewById(R.id.vibrating);
+        settingsBackground = findViewById(R.id.settings_background);
+        changeBackground = findViewById(R.id.change_background);
+        option1 = findViewById(R.id.option_1);
+        option2 = findViewById(R.id.option_2);
+        option3 = findViewById(R.id.option_3);
+        option4 = findViewById(R.id.option_4);
 
         preferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
         final SharedPreferences.Editor preferencesEditor = preferences.edit();
@@ -40,6 +49,9 @@ public class SettingsActivity extends AppCompatActivity {
 
         mVibrate = preferences.getBoolean("vibrating", false);
         setVibrating.setChecked(mVibrate);
+        mBackground = preferences.getInt("background", R.drawable.background_1);
+        if (mBackground != R.drawable.background_1)
+            settingsBackground.setImageResource(mBackground);
 
         String name = preferences.getString("name", "");
         if (name != null && !name.equals(""))
@@ -94,6 +106,74 @@ public class SettingsActivity extends AppCompatActivity {
                 preferencesEditor.putBoolean("vibrating", mVibrate);
                 preferencesEditor.apply();
             }
+        });
+
+        changeBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                option1.setAlpha(0.0f);
+                option1.setVisibility(View.VISIBLE);
+                option1.animate().alpha(1.0f).setDuration(500);
+                option2.setAlpha(0.0f);
+                option2.setVisibility(View.VISIBLE);
+                option2.animate().alpha(1.0f).setDuration(500);
+                option3.setAlpha(0.0f);
+                option3.setVisibility(View.VISIBLE);
+                option3.animate().alpha(1.0f).setDuration(500);
+                option4.setAlpha(0.0f);
+                option4.setVisibility(View.VISIBLE);
+                option4.animate().alpha(1.0f).setDuration(500);
+            }
+        });
+
+        option1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBackground = R.drawable.background_1;
+                preferencesEditor.apply();
+                MainActivity.mainBackground.setImageResource(R.drawable.background_1);
+                settingsBackground.setImageResource(R.drawable.background_1);
+                option1.setVisibility(View.GONE);
+                option2.setVisibility(View.GONE);
+                option3.setVisibility(View.GONE);
+                option4.setVisibility(View.GONE);
+            }
+        });
+        option2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBackground = R.drawable.background_2;
+                preferencesEditor.apply();
+                MainActivity.mainBackground.setImageResource(R.drawable.background_2);
+                settingsBackground.setImageResource(R.drawable.background_2);
+                option1.setVisibility(View.GONE);
+                option2.setVisibility(View.GONE);
+                option3.setVisibility(View.GONE);
+                option4.setVisibility(View.GONE);            }
+        });
+        option3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBackground = R.drawable.background_3;
+                preferencesEditor.apply();
+                MainActivity.mainBackground.setImageResource(R.drawable.background_3);
+                settingsBackground.setImageResource(R.drawable.background_3);
+                option1.setVisibility(View.GONE);
+                option2.setVisibility(View.GONE);
+                option3.setVisibility(View.GONE);
+                option4.setVisibility(View.GONE);            }
+        });
+        option4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBackground = R.drawable.background_4;
+                preferencesEditor.apply();
+                MainActivity.mainBackground.setImageResource(R.drawable.background_4);
+                settingsBackground.setImageResource(R.drawable.background_4);
+                option1.setVisibility(View.GONE);
+                option2.setVisibility(View.GONE);
+                option3.setVisibility(View.GONE);
+                option4.setVisibility(View.GONE);            }
         });
     }
 }
