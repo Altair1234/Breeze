@@ -3,7 +3,6 @@ package com.ninestarstudios.breeze;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -22,19 +21,10 @@ import java.util.Calendar;
 public class MainActivity extends AppCompatActivity {
 
     String mUserName, mAlarmTime;
-    String sharedPrefFile = "com.ninestarstudios.breeze";
     ConstraintLayout mainActivityLayout;
     ImageView mainBackground;
     boolean mAlarmSet;
-    private final String ALARM_KEY = "alarm";
-    private final String WELCOME_SCREEN = "welcome";
-    private final String USER_NAME = "name";
-    private final String ALARM_TIME = "alarm_time";
-    private final String REPEATING = "repeating";
-    final String BACKGROUND = "background";
-    final String FLAG_OF_TUNE = "flag";
-    SharedPreferences preferences;
-    TextView tuneDetail, greetings, cancel, next, downpour, knockerUp, cock, singingBowl, chooseTune;
+    TextView tuneDetail, greetings, cancel, next, downpour, knockerUp, cock, singingBowl, chooseTune, alarmTime;
     MediaPlayer mediaPlayer;
     Button setAlarm, settings;
     CheckBox repeatAlarmCheckBox;
@@ -62,30 +52,33 @@ public class MainActivity extends AppCompatActivity {
         next = findViewById(R.id.next);
         settings = findViewById(R.id.settings);
         mainBackground = findViewById(R.id.main_background);
+        alarmTime = findViewById(R.id.alarm_time);
 
-        preferences = getSharedPreferences(sharedPrefFile, MODE_PRIVATE);
-        final SharedPreferences.Editor preferencesEditor = preferences.edit();
+        SharedPref.init(getApplicationContext());
 
-        mWelcomeScreen = preferences.getInt(WELCOME_SCREEN, 0);
+        mWelcomeScreen = SharedPref.read(SharedPref.WELCOME_SCREEN, 0);
         if (mWelcomeScreen == 0) {
             mWelcomeScreen = 1;
-            preferencesEditor.putInt(WELCOME_SCREEN, mWelcomeScreen);
-            preferencesEditor.apply();
+            SharedPref.write(SharedPref.WELCOME_SCREEN, mWelcomeScreen);
             Intent welcomeActivityIntent = new Intent(this, WelcomeActivity.class);
             startActivity(welcomeActivityIntent);
         }
 
-        mBackground = preferences.getInt(BACKGROUND, R.drawable.background_1);
-        if (mBackground != R.drawable.background_1)
-            mainBackground.setImageResource(mBackground);
+        mBackground = SharedPref.read(SharedPref.BACKGROUND, R.drawable.background_1);
+        mainBackground.setImageResource(mBackground);
 
-        mUserName = preferences.getString(USER_NAME, "");
-        preferencesEditor.putString(USER_NAME, mUserName);
-        preferencesEditor.apply();
+        mUserName = SharedPref.read(SharedPref.USER_NAME, "");
+        SharedPref.write(SharedPref.USER_NAME, mUserName);
         setGreeting();
 
-        mAlarmSet = preferences.getBoolean(ALARM_KEY, false);
-        setAlarm.setText(preferences.getString(ALARM_TIME, "Set Alarm"));
+        mAlarmSet = SharedPref.read(SharedPref.ALARM_KEY, false);
+        mAlarmTime = SharedPref.read(SharedPref.ALARM_TIME, "");
+
+        if(mAlarmSet){
+            alarmTime.setVisibility(View.VISIBLE);
+            alarmTime.setText(mAlarmTime);
+            setAlarm.setText("Cancel");
+        }
 
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -207,7 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.downpour_sound);
                 mediaPlayer.start();
                 mFlagOfTune = 0;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.FLAG_OF_TUNE, mFlagOfTune);
                 tuneDetail.setText("Rain and thunderclaps as the alarm tune.");
                 tuneDetail.setVisibility(View.VISIBLE);
             }
@@ -223,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.knockerup_sound);
                 mediaPlayer.start();
                 mFlagOfTune = 1;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.FLAG_OF_TUNE, mFlagOfTune);
                 tuneDetail.setText("During the 1920s, a knocker-up would knock on the client's door to wake him up.");
                 tuneDetail.setVisibility(View.VISIBLE);
             }
@@ -239,7 +232,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.cock_sound);
                 mediaPlayer.start();
                 mFlagOfTune = 2;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.FLAG_OF_TUNE, mFlagOfTune);
                 tuneDetail.setText("Cocks have been used since time unknown as (pretty unreliable) alarm clocks.");
                 tuneDetail.setVisibility(View.VISIBLE);
             }
@@ -255,7 +248,7 @@ public class MainActivity extends AppCompatActivity {
                 mediaPlayer = MediaPlayer.create(MainActivity.this, R.raw.singing_bowl_sound);
                 mediaPlayer.start();
                 mFlagOfTune = 3;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.FLAG_OF_TUNE, mFlagOfTune);
                 tuneDetail.setText("Singing bowls are used in some Buddhist religious practices as well as for meditation and relaxation.");
                 tuneDetail.setVisibility(View.VISIBLE);
             }
@@ -295,22 +288,25 @@ public class MainActivity extends AppCompatActivity {
             ringingFrequency = " tomorrow" + ringingFrequency;
         } else if (cal.getTimeInMillis() < currentTime && repeatAlarm) {
             cal.setTimeInMillis(cal.getTimeInMillis() + (24 * 60 * 60 * 1000));
-            ringingFrequency = " everyday" + ringingFrequency;
+            ringingFrequency = ", everyday" + ringingFrequency;
         } else if (repeatAlarm)
-            ringingFrequency = " everyday" + ringingFrequency;
+            ringingFrequency = ", everyday" + ringingFrequency;
 
         if (!repeatAlarm) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         } else {
             alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
         }
-        Toast.makeText(MainActivity.this, "Alarm set for " + toastHour + ":" + toastMinute + " " + meridian + ringingFrequency, Toast.LENGTH_LONG).show();
+
+        Toast.makeText(MainActivity.this, "Alarm set for " + toastHour + ":" + toastMinute + meridian + ringingFrequency, Toast.LENGTH_LONG).show();
         greetings.setVisibility(View.VISIBLE);
         mAlarmTime = toastHour + ":" + toastMinute + meridian + ringingFrequency;
-        mAlarmSet = true;
-        onPause();
+        SharedPref.write(SharedPref.ALARM_TIME, mAlarmTime);
+        SharedPref.write(SharedPref.ALARM_KEY, true);
         setAlarm.setText("Cancel");
         setAlarm.setVisibility(View.VISIBLE);
+        alarmTime.setText(mAlarmTime);
+        alarmTime.setVisibility(View.VISIBLE);
     }
 
     public void cancelAlarm() {
@@ -319,8 +315,10 @@ public class MainActivity extends AppCompatActivity {
         AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
         setAlarm.setText("Set Alarm");
-        greetings.setText("");
-        greetings.setVisibility(View.GONE);
+        mAlarmTime = "";
+        SharedPref.write(SharedPref.ALARM_TIME, "");
+        alarmTime.setVisibility(View.GONE);
+        SharedPref.write(SharedPref.ALARM_KEY, false);
     }
 
     public void setGreeting() {
@@ -330,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 greetings.setText("Good morning!");
             else if (hour >= 12 && hour < 17)
                 greetings.setText("Having a nice day?");
-            else if (hour >= 17 && hour < 22)
+            else if (hour >= 17 && hour < 21)
                 greetings.setText("'tis play time!");
             else
                 greetings.setText("Sleep well!");
@@ -339,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
                 greetings.setText("Good morning, " + mUserName + "!");
             else if (hour >= 12 && hour < 17)
                 greetings.setText("Having a nice day " + mUserName + "?");
-            else if (hour >= 17 && hour < 22)
+            else if (hour >= 17 && hour < 21)
                 greetings.setText("'tis play time, " + mUserName + " :)");
             else
                 greetings.setText("Sleep well " + mUserName + ".");
@@ -347,17 +345,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences.Editor preferencesEditor = preferences.edit();
-        preferencesEditor.putBoolean(ALARM_KEY, mAlarmSet);
-        preferencesEditor.putInt(WELCOME_SCREEN, mWelcomeScreen);
-        preferencesEditor.putString(USER_NAME, mUserName);
-        preferencesEditor.putInt(FLAG_OF_TUNE, mFlagOfTune);
-        preferencesEditor.putString(ALARM_TIME, mAlarmTime);
-        preferencesEditor.putBoolean(REPEATING, mRepeatAlarm);
-        preferencesEditor.putInt(BACKGROUND, mBackground);
-        preferencesEditor.apply();
+    protected void onResume(){
+        super.onResume();
+        mBackground = SharedPref.read(SharedPref.BACKGROUND, R.drawable.background_1);
+        mainBackground.setImageResource(mBackground);
     }
 }
 /*LinearLayout mRepeatDays1, mRepeatDays2;
