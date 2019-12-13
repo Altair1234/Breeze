@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     String mUserName, mAlarmTime;
     String sharedPrefFile = "com.ninestarstudios.breeze";
     ConstraintLayout mainActivityLayout;
-    static ImageView mainBackground;
+    ImageView mainBackground;
     boolean mAlarmSet;
     private final String ALARM_KEY = "alarm";
     private final String WELCOME_SCREEN = "welcome";
@@ -130,12 +130,8 @@ public class MainActivity extends AppCompatActivity {
                     repeatAlarmCheckBox.setAlpha(0.0f);
                     repeatAlarmCheckBox.setVisibility(View.VISIBLE);
                     repeatAlarmCheckBox.animate().alpha(1.0f).setDuration(500);
-                    mScreenCounter = 2;
+                    mScreenCounter = 1;
                 } else if (mScreenCounter == 1) {
-                    repeatAlarmCheckBox.setVisibility(View.GONE);
-
-                    mScreenCounter = 2;
-                } else if (mScreenCounter == 2) {
                     repeatAlarmCheckBox.setVisibility(View.GONE);
                     chooseTune.setAlpha(0.0f);
                     chooseTune.setVisibility(View.VISIBLE);
@@ -152,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
                     singingBowl.setAlpha(0.0f);
                     singingBowl.setVisibility(View.VISIBLE);
                     singingBowl.animate().alpha(1.0f).setDuration(500);
-                    mScreenCounter = 3;
+                    mScreenCounter = 2;
                 } else {
                     if (mediaPlayer == null) {
                         Toast.makeText(MainActivity.this, "Please choose an alarm tune", Toast.LENGTH_LONG).show();
@@ -313,8 +309,6 @@ public class MainActivity extends AppCompatActivity {
         mAlarmTime = toastHour + ":" + toastMinute + meridian + ringingFrequency;
         mAlarmSet = true;
         onPause();
-        greetings.setText(mAlarmTime);
-        greetings.setAlpha(1.0f);
         setAlarm.setText("Cancel");
         setAlarm.setVisibility(View.VISIBLE);
     }
@@ -350,9 +344,6 @@ public class MainActivity extends AppCompatActivity {
             else
                 greetings.setText("Sleep well " + mUserName + ".");
         }
-        greetings.setAlpha(1.0f);
-        greetings.setVisibility(View.VISIBLE);
-        greetings.animate().alpha(0.0f).setDuration(4000);
     }
 
     @Override

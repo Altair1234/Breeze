@@ -17,7 +17,7 @@ import android.widget.ImageView;
 public class StopAlarmActivity extends AppCompatActivity {
 
     static MediaPlayer mediaPlayer;
-    static ImageView stopBackground;
+    ImageView stopBackground;
     int mFlagOfTune, mBackground;
     private static final String TAG = "AlertReceiver";
     SharedPreferences sharedPreferences;

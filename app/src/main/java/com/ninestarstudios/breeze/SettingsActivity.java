@@ -131,7 +131,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBackground = R.drawable.background_1;
                 preferencesEditor.apply();
-                MainActivity.mainBackground.setImageResource(R.drawable.background_1);
                 settingsBackground.setImageResource(R.drawable.background_1);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -144,7 +143,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBackground = R.drawable.background_2;
                 preferencesEditor.apply();
-                MainActivity.mainBackground.setImageResource(R.drawable.background_2);
                 settingsBackground.setImageResource(R.drawable.background_2);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -156,7 +154,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBackground = R.drawable.background_3;
                 preferencesEditor.apply();
-                MainActivity.mainBackground.setImageResource(R.drawable.background_3);
                 settingsBackground.setImageResource(R.drawable.background_3);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -168,7 +165,6 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 mBackground = R.drawable.background_4;
                 preferencesEditor.apply();
-                MainActivity.mainBackground.setImageResource(R.drawable.background_4);
                 settingsBackground.setImageResource(R.drawable.background_4);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
