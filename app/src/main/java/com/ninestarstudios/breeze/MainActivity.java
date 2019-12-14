@@ -345,6 +345,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         mBackground = SharedPref.read(SharedPref.BACKGROUND, R.drawable.background_1);
         mainBackground.setImageResource(mBackground);
+        mUserName = SharedPref.read(SharedPref.USER_NAME, "");
+        setGreeting();
     }
 }
 /*LinearLayout mRepeatDays1, mRepeatDays2;

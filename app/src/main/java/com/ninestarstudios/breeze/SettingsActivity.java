@@ -69,6 +69,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (changeNameET.getText() == null || changeNameET.getText().toString().equals("")) {
                     Toast.makeText(SettingsActivity.this, "No name entered", Toast.LENGTH_LONG).show();
                     changeNameLL.setVisibility(View.GONE);
+                    SharedPref.write(SharedPref.USER_NAME, "");
                 } else {
                     String newName = changeNameET.getText().toString();
                     Toast.makeText(SettingsActivity.this, "Welcome, " + newName + "!", Toast.LENGTH_LONG).show();
