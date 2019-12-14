@@ -292,12 +292,8 @@ public class MainActivity extends AppCompatActivity {
         } else if (repeatAlarm)
             ringingFrequency = ", everyday" + ringingFrequency;
 
-        if (!repeatAlarm) {
-            alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
-        } else {
-            alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), 24 * 60 * 60 * 1000, pendingIntent);
-        }
-
+        SharedPref.write(SharedPref.TIME_IN_MILLIS, cal.getTimeInMillis());
+        alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
         Toast.makeText(MainActivity.this, "Alarm set for " + toastHour + ":" + toastMinute + meridian + ringingFrequency, Toast.LENGTH_LONG).show();
         greetings.setVisibility(View.VISIBLE);
         mAlarmTime = toastHour + ":" + toastMinute + meridian + ringingFrequency;

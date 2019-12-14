@@ -40,19 +40,6 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="HardcodedText" />
 
-    <CheckBox
-        android:id="@+id/repeat_alarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Repeat Alarm?"
-        android:textSize="16sp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
-
     <ImageView
         android:id="@+id/main_background"
         android:layout_width="match_parent"
@@ -63,6 +50,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <CheckBox
+        android:id="@+id/repeat_alarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Repeat Alarm?"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
+
 
     <LinearLayout
         android:id="@+id/next_and_cancel"
@@ -93,104 +95,6 @@
             android:text="Next"
             android:textSize="18sp"
             android:visibility="gone" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/repeat_days_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/repeat_days_2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/sunday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="S"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/monday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="M"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/tuesday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="T"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/wednesday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="W"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/repeat_days_2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/thursday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="T"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/friday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="F"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
-
-        <Button
-            android:id="@+id/saturday"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="4dp"
-            android:background="@drawable/round_button_unselected"
-            android:text="S"
-            android:textColor="@color/white"
-            tools:ignore="ButtonStyle,HardcodedText" />
 
     </LinearLayout>
 
@@ -297,5 +201,18 @@
         app:layout_constraintBottom_toTopOf="@id/next_and_cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:visibility="gone"
+        android:id="@+id/alarm_time"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/greetings"
+        app:layout_constraintBottom_toTopOf="@id/set_alarm"
+        android:textColor="@color/white"
+        android:textSize="28sp"/>
 
 </android.support.constraint.ConstraintLayout>

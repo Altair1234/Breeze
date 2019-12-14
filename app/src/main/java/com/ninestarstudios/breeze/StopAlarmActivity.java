@@ -1,8 +1,10 @@
 package com.ninestarstudios.breeze;
 
+import android.app.AlarmManager;
 import android.app.KeyguardManager;
+import android.app.PendingIntent;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -14,13 +16,13 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.util.Calendar;
+
 public class StopAlarmActivity extends AppCompatActivity {
 
     static MediaPlayer mediaPlayer;
     ImageView stopBackground;
     int mFlagOfTune, mBackground;
-    private static final String TAG = "AlertReceiver";
-    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +39,17 @@ public class StopAlarmActivity extends AppCompatActivity {
                     WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
         }
 
+        SharedPref.init(getApplicationContext());
+
         Button mStopAlarm = findViewById(R.id.stop_alarm);
         stopBackground = findViewById(R.id.stop_background);
 
-        sharedPreferences = this.getSharedPreferences("com.ninestarstudios.breeze", Context.MODE_PRIVATE);
+        mFlagOfTune = SharedPref.read(SharedPref.FLAG_OF_TUNE, 0);
+        mBackground = SharedPref.read(SharedPref.BACKGROUND, R.drawable.background_1);
+        boolean mIncreasingVolume = SharedPref.read(SharedPref.INCREASING, false);
+        final boolean mVibrate = SharedPref.read(SharedPref.VIBRATING, true);
 
-        mFlagOfTune = sharedPreferences.getInt("flag", 0);
-        mBackground = sharedPreferences.getInt("background", R.drawable.background_1);
-        boolean mIncreasingVolume = sharedPreferences.getBoolean("increasing", false);
-        final boolean mVibrate = sharedPreferences.getBoolean("vibrating", true);
-
-        if (mBackground != R.drawable.background_1)
-            stopBackground.setImageResource(mBackground);
+        stopBackground.setImageResource(mBackground);
 
         if (mFlagOfTune == 0)
             mediaPlayer = MediaPlayer.create(this, R.raw.downpour_sound);
@@ -91,11 +92,16 @@ public class StopAlarmActivity extends AppCompatActivity {
         mStopAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-                if (!sharedPreferences.getBoolean("repeating", false)) {
-                    sharedPreferencesEditor.putBoolean("alarm", false);
-                    sharedPreferencesEditor.putString("alarm_time", "Set Alarm");
-                    sharedPreferencesEditor.apply();
+                if (!SharedPref.read(SharedPref.REPEATING, false)) {
+                    SharedPref.write(SharedPref.ALARM_KEY, false);
+                    SharedPref.write(SharedPref.ALARM_TIME, "Set Alarm");
+                } else {
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(SharedPref.read(SharedPref.TIME_IN_MILLIS + 24 * 60 * 60 * 1000, 0));
+                    Intent intent = new Intent(StopAlarmActivity.this, AlertReceiver.class);
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(StopAlarmActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pendingIntent);
                 }
                 mediaPlayer.stop();
                 mediaPlayer.release();

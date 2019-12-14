@@ -1,6 +1,5 @@
 package com.ninestarstudios.breeze;
 
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -18,7 +17,6 @@ public class SettingsActivity extends AppCompatActivity {
     TextView changeNameTV, changeNameDone, changeBackground;
     LinearLayout changeNameLL;
     EditText changeNameET;
-    SharedPreferences preferences;
     ImageView option1, option2, option3, option4, settingsBackground;
     int mBackground;
     boolean mVibrate, mIncreasingVolume;
@@ -41,19 +39,18 @@ public class SettingsActivity extends AppCompatActivity {
         option3 = findViewById(R.id.option_3);
         option4 = findViewById(R.id.option_4);
 
-        preferences = getSharedPreferences("com.ninestarstudios.breeze", MODE_PRIVATE);
-        final SharedPreferences.Editor preferencesEditor = preferences.edit();
+        SharedPref.init(getApplicationContext());
 
-        mIncreasingVolume = preferences.getBoolean("increasing", false);
+        mIncreasingVolume = SharedPref.read(SharedPref.INCREASING, false);
         setIncreasing.setChecked(mIncreasingVolume);
 
-        mVibrate = preferences.getBoolean("vibrating", false);
+        mVibrate = SharedPref.read(SharedPref.VIBRATING, false);
         setVibrating.setChecked(mVibrate);
-        mBackground = preferences.getInt("background", R.drawable.background_1);
-        if (mBackground != R.drawable.background_1)
-            settingsBackground.setImageResource(mBackground);
+        mBackground = SharedPref.read(SharedPref.BACKGROUND, R.drawable.background_1);
 
-        String name = preferences.getString("name", "");
+        settingsBackground.setImageResource(mBackground);
+
+        String name = SharedPref.read(SharedPref.USER_NAME, "");
         if (name != null && !name.equals(""))
             changeNameET.setText(name);
 
@@ -75,8 +72,7 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     String newName = changeNameET.getText().toString();
                     Toast.makeText(SettingsActivity.this, "Welcome, " + newName + "!", Toast.LENGTH_LONG).show();
-                    preferencesEditor.putString("name", newName);
-                    preferencesEditor.apply();
+                    SharedPref.write(SharedPref.USER_NAME, newName);
                     changeNameLL.setVisibility(View.GONE);
                 }
             }
@@ -85,13 +81,12 @@ public class SettingsActivity extends AppCompatActivity {
         setIncreasing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    Toast.makeText(SettingsActivity.this, "Volume of alarm will increase until stopped", Toast.LENGTH_LONG).show();
+                    Toast.makeText(SettingsActivity.this, "Volume of alarm will increase until stopped (experimental feature)", Toast.LENGTH_LONG).show();
                     mIncreasingVolume = true;
                 } else {
                     mIncreasingVolume = false;
                 }
-                preferencesEditor.putBoolean("increasing", mIncreasingVolume);
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.INCREASING, mIncreasingVolume);
             }
         });
 
@@ -103,26 +98,17 @@ public class SettingsActivity extends AppCompatActivity {
                 } else {
                     mVibrate = false;
                 }
-                preferencesEditor.putBoolean("vibrating", mVibrate);
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.VIBRATING, mVibrate);
             }
         });
 
         changeBackground.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                option1.setAlpha(0.0f);
                 option1.setVisibility(View.VISIBLE);
-                option1.animate().alpha(1.0f).setDuration(500);
-                option2.setAlpha(0.0f);
                 option2.setVisibility(View.VISIBLE);
-                option2.animate().alpha(1.0f).setDuration(500);
-                option3.setAlpha(0.0f);
                 option3.setVisibility(View.VISIBLE);
-                option3.animate().alpha(1.0f).setDuration(500);
-                option4.setAlpha(0.0f);
                 option4.setVisibility(View.VISIBLE);
-                option4.animate().alpha(1.0f).setDuration(500);
             }
         });
 
@@ -130,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBackground = R.drawable.background_1;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.BACKGROUND, mBackground);
                 settingsBackground.setImageResource(R.drawable.background_1);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -142,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBackground = R.drawable.background_2;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.BACKGROUND, mBackground);
                 settingsBackground.setImageResource(R.drawable.background_2);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -153,7 +139,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBackground = R.drawable.background_3;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.BACKGROUND, mBackground);
                 settingsBackground.setImageResource(R.drawable.background_3);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);
@@ -164,7 +150,7 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mBackground = R.drawable.background_4;
-                preferencesEditor.apply();
+                SharedPref.write(SharedPref.BACKGROUND, mBackground);
                 settingsBackground.setImageResource(R.drawable.background_4);
                 option1.setVisibility(View.GONE);
                 option2.setVisibility(View.GONE);

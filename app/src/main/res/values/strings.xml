@@ -1,11 +1,5 @@
 <resources>
     <string name="app_name">Breeze</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="siren_switch_title">Siren</string>
-    <string name="siren_switch_summary">Play siren after a minute if alarm is not turned off.</string>
     <string name="settings_button">Settings</string>
     <string name="alarm_time_popup_button">Pick Alarm Time</string>
-    <string name="gradual_wake_up_switch_summary">The alarm volume increases gradually until it\'s turned off.</string>
-    <string name="gradual_wake_up_switch_title">Gradual Wake-Up</string>
 </resources>
