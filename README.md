@@ -3,6 +3,9 @@
 
 Presenting Breeze - The Morning Alarm App
 
+
+<a href='https://play.google.com/store/apps/details?id=com.ninestarstudios.breeze&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+
 The purpose of this app was to get me some experience with developing something useful. It's now being repurposed so that new Android developers can learn from it, experienced developers can contribute to it and non-developers can install and request features for it.
 
 Right now, the app can:
@@ -40,6 +43,5 @@ Features that might be done, please give feedback:
 
 Feel free to fix bugs, use the app for your own purposes, work on new features or suggest improvements!
 
-<a href='https://play.google.com/store/apps/details?id=com.ninestarstudios.breeze&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
 
  __Disclaimer:__ _While the app is provided for free use, whether personal or commercial, the 9* Studios name, 9starstudios name, 9* Studios logo and lastly, the Breeze app icon (as provided at the top of this file) are the sole property of the original developer of the app, that is, the user Altair1234 on github.com. Useage of said property is not permitted unless by written permission given by the owner. The owner is also not responsible for any damage or consequences arising from the useage of the provided code under any circumstances. Google Play and the Google Play logo are trademarks of Google LLC._ 
