@@ -45,3 +45,5 @@ Feel free to fix bugs, use the app for your own purposes, work on new features o
 
 
  __Disclaimer:__ _While the app is provided for free use, whether personal or commercial, the 9* Studios name, 9starstudios name, 9* Studios logo and lastly, the Breeze app icon (as provided at the top of this file) are the sole property of the original developer of the app, that is, the user Altair1234 on github.com. Useage of said property is not permitted unless by written permission given by the owner. The owner is also not responsible for any damage or consequences arising from the useage of the provided code under any circumstances. Google Play and the Google Play logo are trademarks of Google LLC._ 
+ 
+ The code is provided under the GNU GPLv3 license. 
