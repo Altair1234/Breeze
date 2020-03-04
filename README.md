@@ -16,9 +16,10 @@ Right now, the app can:
 3. Toggle between increasing and steady alarm sound (experimental).
 4. Toggle alarm vibrations.
 5. Choose between four backgrounds:
-    * ![Can't find image](https://imgur.com/F4KqlHH.png "Weeds")    * ![Can't find image](https://imgur.com/MTL3qOS.png "Evening Forest")
 
-    * ![Can't find image](https://imgur.com/YDBVzsZ.png "Kites")    * ![Can't find image](https://imgur.com/ULvYzNt.png "Moon and Ocean")
+      ![Can't find image](https://imgur.com/F4KqlHH.png "Weeds")     ![Can't find image](https://imgur.com/MTL3qOS.png "Evening Forest")
+
+      ![Can't find image](https://imgur.com/YDBVzsZ.png "Kites")     ![Can't find image](https://imgur.com/ULvYzNt.png "Moon and Ocean")
 
 Known bugs include:
 1. The increasing alarm sound feature might not work.
